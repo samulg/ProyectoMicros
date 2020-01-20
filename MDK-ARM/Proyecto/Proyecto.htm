@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Proyecto\Proyecto.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Proyecto\Proyecto.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Jan 19 23:11:38 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Jan 20 12:44:52 2020
 <BR><P>
 <H3>Maximum Stack Usage =        176 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -43,7 +43,7 @@ Function Pointers
  <LI><a href="#[10]">EXTI0_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
  <LI><a href="#[2d]">EXTI15_10_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
  <LI><a href="#[11]">EXTI1_IRQHandler</a> from stm32f4xx_it.o(i.EXTI1_IRQHandler) referenced from startup_stm32f411xe.o(RESET)
- <LI><a href="#[12]">EXTI2_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
+ <LI><a href="#[12]">EXTI2_IRQHandler</a> from stm32f4xx_it.o(i.EXTI2_IRQHandler) referenced from startup_stm32f411xe.o(RESET)
  <LI><a href="#[13]">EXTI3_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
  <LI><a href="#[14]">EXTI4_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
  <LI><a href="#[1d]">EXTI9_5_IRQHandler</a> from startup_stm32f411xe.o(.text) referenced from startup_stm32f411xe.o(RESET)
@@ -181,9 +181,6 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f411xe.o(RESET)
 </UL>
 <P><STRONG><a name="[2d]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f411xe.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f411xe.o(RESET)
-</UL>
-<P><STRONG><a name="[12]"></a>EXTI2_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f411xe.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f411xe.o(RESET)
 </UL>
 <P><STRONG><a name="[13]"></a>EXTI3_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f411xe.o(.text))
@@ -414,6 +411,13 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f411xe.o(RESET)
 </UL>
+<P><STRONG><a name="[12]"></a>EXTI2_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.EXTI2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = EXTI2_IRQHandler &rArr; HAL_GPIO_EXTI_IRQHandler &rArr; HAL_GPIO_EXTI_Callback
+</UL>
+<BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_IRQHandler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f411xe.o(RESET)
+</UL>
 <P><STRONG><a name="[7c]"></a>HAL_ADC_ConfigChannel</STRONG> (Thumb, 334 bytes, Stack size 20 bytes, stm32f4xx_hal_adc.o(i.HAL_ADC_ConfigChannel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = HAL_ADC_ConfigChannel
 </UL>
@@ -468,7 +472,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5d]"></a>HAL_GPIO_EXTI_Callback</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, main.o(i.HAL_GPIO_EXTI_Callback))
+<P><STRONG><a name="[5d]"></a>HAL_GPIO_EXTI_Callback</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, main.o(i.HAL_GPIO_EXTI_Callback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_GPIO_EXTI_Callback
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
@@ -481,7 +485,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI2_IRQHandler
+<LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[59]"></a>HAL_GPIO_Init</STRONG> (Thumb, 370 bytes, Stack size 40 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init))
@@ -764,7 +769,7 @@ Global Symbols
 
 <P><STRONG><a name="[99]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
-<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 522 bytes, Stack size 8 bytes, main.o(i.main))
+<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 530 bytes, Stack size 8 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = main &rArr; MX_TIM1_Init &rArr; HAL_TIM_MspPostInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
@@ -801,7 +806,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7d]"></a>MX_GPIO_Init</STRONG> (Thumb, 152 bytes, Stack size 48 bytes, main.o(i.MX_GPIO_Init))
+<P><STRONG><a name="[7d]"></a>MX_GPIO_Init</STRONG> (Thumb, 236 bytes, Stack size 48 bytes, main.o(i.MX_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = MX_GPIO_Init &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority

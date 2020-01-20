@@ -70,10 +70,12 @@ int posicion, automatico;
 const int timeThreshold = 300;
 long startTime = 0;
 long startTime1 = 0;
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupcion
 {
 	//modulo antirrebotes
-	if (GPIO_Pin==GPIO_PIN_1)
+		
+	if(GPIO_Pin == GPIO_PIN_1)
 	{
 		if ( HAL_GetTick() - startTime > timeThreshold )
 		{
@@ -85,19 +87,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupcion
 		}
 		startTime = HAL_GetTick();
 	}
-	else if (GPIO_Pin == GPIO_PIN_0)
+	else if (GPIO_Pin == GPIO_PIN_2)
 	{
-		if ( HAL_GetTick() - startTime1 > timeThreshold )
-	{
+		if ( HAL_GetTick() - startTime > timeThreshold )
+		{
+			// Control de la interrupción del botón
 			if(automatico==1)
 				automatico=0;
 			else
-				automatico++;
-	}
-	startTime1 = HAL_GetTick();
+				automatico++;	
+		}
+		startTime = HAL_GetTick();// Control de la interrupción del botón
 	}
 }
-
 /* USER CODE END 0 */
 
 /**
@@ -134,7 +136,6 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 	posicion =0;
-	automatico =0; 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -172,29 +173,28 @@ int main(void)
 		HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1); //VERDE PEATONES
 		HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_2);
 	}
-
-	if (automatico ==1)
-	{
-		HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);//VERDE COCHES
+ if(automatico==1)
+ {
+	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);//VERDE COCHES
 		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
 		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3);
 		HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2); //ROJO PEATONES
-		HAL_Delay(2000);
-		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+	  HAL_Delay(2000);
+	 	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
 		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
 		HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); //AMARILLO COCHES
 		HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2); //ROJO PEATONES
-		HAL_Delay (2000);
-		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+	  HAL_Delay(2000);
+	 	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);//ROJO COCHES
 		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3);
 		HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1); //VERDE PEATONES
 		HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_2);
-		HAL_Delay (2000);
-	}
-
+	  HAL_Delay(2000);
+ }
+	 
 	//Potenciometro
 	HAL_ADC_Start(&hadc1);
 	if (HAL_ADC_PollForConversion(&hadc1,UINT32_MAX )==HAL_OK) 
@@ -495,12 +495,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PE2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA1 */
   GPIO_InitStruct.Pin = GPIO_PIN_1;
@@ -521,9 +531,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
 }
 

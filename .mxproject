@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/samue/Desktop/SED/Proyecto Micros/Proyecto/Inc
+HeaderPath=C:/Users/samue/Desktop/Proyecto/Inc
 HeaderFiles=stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;
-SourcePath=C:/Users/samue/Desktop/SED/Proyecto Micros/Proyecto/Src
+SourcePath=C:/Users/samue/Desktop/Proyecto/Src
 SourceFiles=stm32f4xx_it.c;stm32f4xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
